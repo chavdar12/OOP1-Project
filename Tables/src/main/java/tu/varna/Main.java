@@ -8,12 +8,12 @@ public class Main {
         table.put("2", "2", "2");
         table.put("3", "3", "3");
 
-        System.out.println(table.toString());
+        System.out.println(table);
 
-        FileUtil.saveTable(table, "C:\\Users\\chavd\\Documents\\Projects\\IdeaProjects\\Tables\\src\\main\\resources\\table.txt");
+        FileUtil.saveTable(table, "table.xml");
 
-        table2 = FileUtil.loadTable("C:\\Users\\chavd\\Documents\\Projects\\IdeaProjects\\Tables\\src\\main\\resources\\table.txt");
+        table2 = FileUtil.loadTable("table.xml");
 
-        System.out.println(table2.toString());
+        System.out.println(table2);
     }
 }

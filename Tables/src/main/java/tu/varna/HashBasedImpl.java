@@ -1,8 +1,10 @@
 package tu.varna;
 
+import org.jdom2.Element;
+
 import java.util.*;
 
-import static tu.varna.Preconditions.*;
+import static tu.varna.Preconditions.checkNotNull;
 
 public class HashBasedImpl<R, C, V> implements Table<R, C, V> {
 
@@ -225,5 +227,23 @@ public class HashBasedImpl<R, C, V> implements Table<R, C, V> {
         }
         return sb.toString();
 
+    }
+    @Override
+    public Element toXml() {
+        Element root = new Element("table");
+        for (R rowKey : table.keySet()) {
+            Element row = new Element("row");
+            row.setAttribute("key", rowKey.toString());
+            for (C columnKey : table.get(rowKey).keySet()) {
+                Element column = new Element("column");
+                column.setAttribute("key", columnKey.toString());
+                Element value = new Element("value");
+                value.setText(table.get(rowKey).get(columnKey).toString());
+                column.addContent(value);
+                row.addContent(column);
+            }
+            root.addContent(row);
+        }
+        return root;
     }
 }

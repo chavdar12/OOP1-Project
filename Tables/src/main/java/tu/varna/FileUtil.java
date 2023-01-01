@@ -1,40 +1,54 @@
 package tu.varna;
 
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.DOMBuilder;
+import org.jdom2.output.XMLOutputter;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import java.util.List;
 
 public class FileUtil {
-    //save table to file
     public static void saveTable(Table<String, String, String> table, String fileName) {
-        File file = new File(fileName);
         try {
-            FileWriter writer = new FileWriter(file);
-            writer.write(table.toString());
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            DOMBuilder domBuilder = new DOMBuilder();
+            Document document = domBuilder.build(builder.newDocument());
+            document.setRootElement(table.toXml());
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.output(document, new FileWriter(fileName));
+        } catch (Exception e) {
+            System.out.printf("Error: %s", e.getMessage());
         }
     }
 
-    //load table from file
     public static Table<String, String, String> loadTable(String fileName) {
-        //reat table C:\Users\chavd\Documents\Projects\IdeaProjects\Tables\src\main\resources\table.txt
-
         Table<String, String, String> table = new HashBasedImpl<>();
-        File file = new File(fileName);
         try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] values = line.split(",");
-                table.put(values[0], values[1], values[2]);
+            File inputFile = new File(fileName);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            org.w3c.dom.Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            DOMBuilder domBuilder = new DOMBuilder();
+            Document document = domBuilder.build(doc);
+            Element root = document.getRootElement();
+            List<Element> rows = root.getChildren();
+            for (Element row : rows) {
+                String rowKey = row.getAttributeValue("key");
+                List<Element> columns = row.getChildren();
+                for (Element column : columns) {
+                    String columnKey = column.getAttributeValue("key");
+                    String value = column.getChildText("value");
+                    table.put(rowKey, columnKey, value);
+                }
             }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+        } catch (Exception e) {
+            System.out.printf("Error: %s", e.getMessage());
         }
         return table;
     }

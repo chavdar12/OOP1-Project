@@ -1,5 +1,7 @@
 package tu.varna;
 
+import org.jdom2.Element;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -49,6 +51,8 @@ public interface Table<R, C, V> {
     Map<R, Map<C, V>> rowMap();
 
     Map<C, Map<R, V>> columnMap();
+
+    Element toXml();
 
     interface Cell<R, C, V> {
         R getRowKey();

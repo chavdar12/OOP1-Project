@@ -13,7 +13,14 @@ public class Application implements IApplication {
 
     @Override
     public void printMenu() {
-        System.out.println(Constants.MENU_OPTIONS);
+        System.out.println("""
+                1. Open
+                2. Close
+                3. Save
+                4. Save as
+                5. Help
+                6. Exit
+                """);
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
         switch (option) {
@@ -28,7 +35,14 @@ public class Application implements IApplication {
     }
 
     private void help() {
-        System.out.println(Constants.HELP_OPTIONS);
+        System.out.println("""
+                1. Open - open a table from a file
+                2. Close - close the current table
+                3. Save - save the current table to a file
+                4. Save as - save the current table to a file with a new name
+                5. Help - show the menu
+                6. Exit - exit the program
+                """);
     }
 
     private void saveAs() {
@@ -44,7 +58,11 @@ public class Application implements IApplication {
     }
 
     private void open() {
-        System.out.println(Constants.OPEN_FILE_OPTIONS);
+        System.out.println("""
+                1. Open existing table
+                2. Open new table
+                3. Back
+                """);
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
         switch (option) {
@@ -61,7 +79,13 @@ public class Application implements IApplication {
         String fileName = scanner.nextLine();
         table = FileUtil.loadTable(fileName);
         System.out.println(table);
-        System.out.println(Constants.DATA_OPTIONS);
+        System.out.println("""
+                1. Print table
+                2. Add value
+                3. Remove value
+                3. Perform operation
+                4. Back
+                """);
         int option = scanner.nextInt();
         switch (option) {
             case 1 -> printTable();
