@@ -1,4 +1,4 @@
-package tu.varna;
+package tu.varna.table.impl;
 
 public class CellImpl<R, C, V> implements Table.Cell<R, C, V> {
 

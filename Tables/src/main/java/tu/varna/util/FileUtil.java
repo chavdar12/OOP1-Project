@@ -1,9 +1,11 @@
-package tu.varna;
+package tu.varna.util;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.DOMBuilder;
 import org.jdom2.output.XMLOutputter;
+import tu.varna.table.impl.HashBasedImpl;
+import tu.varna.table.impl.Table;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

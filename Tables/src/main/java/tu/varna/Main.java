@@ -1,19 +1,24 @@
 package tu.varna;
 
+import tu.varna.menu.IMenu;
+import tu.varna.menu.MainMenu;
+import tu.varna.menu.subMenus.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        Table<String, String, String> table = new HashBasedImpl<>();
-        Table<String, String, String> table2 = new HashBasedImpl<>();
-        table.put("1", "1", "1");
-        table.put("2", "2", "2");
-        table.put("3", "3", "3");
-
-        System.out.println(table);
-
-        FileUtil.saveTable(table, "table.xml");
-
-        table2 = FileUtil.loadTable("table.xml");
-
-        System.out.println(table2);
+        List<IMenu> subMenus = new ArrayList<>();
+        subMenus.add(new OpenSubMenu());
+        subMenus.add(new CloseSubMenu());
+        subMenus.add(new SaveSubMenu());
+        subMenus.add(new SaveAsSubMenu());
+        subMenus.add(new HelpSubMenu());
+        MainMenu mainMenu = new MainMenu(subMenus);
+        while (true) {
+            mainMenu.display();
+            mainMenu.handleUserChoice();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package tu.varna;
+package tu.varna.table.impl;
 
 import org.jdom2.Element;
 

@@ -1,10 +1,10 @@
-package tu.varna;
+package tu.varna.table.impl;
 
 import org.jdom2.Element;
 
 import java.util.*;
 
-import static tu.varna.Preconditions.checkNotNull;
+import static tu.varna.util.Preconditions.checkNotNull;
 
 public class HashBasedImpl<R, C, V> implements Table<R, C, V> {
 
